@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        ">
+
+	<!-- 定义此DispatcherServlet的请求处理基础结构  -->
+	
+	<!-- 导入用户定义的处理客户机请求的Controller的bean.xml  -->
+	<beans:import resource="controllers.xml" />
+
+	<!-- 开启注解自动扫描 -->
+	<annotation-driven />
+
+	<!-- 设置静态资源可访问-->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- 创建freeMakerConfig对象,并相关属性进行配置 -->
+	<beans:bean id="freemarkerConfig" 
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<!-- 模板加载路径 -->
+		<beans:property name="templateLoaderPath" value="/WEB-INF/ftl/" />
+	</beans:bean>
+	
+	<!-- freemarker视图解析器 -->
+	<beans:bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<beans:property name="cache" value="true" />
+		<beans:property name="prefix" value="" />
+		<beans:property name="suffix" value=".ftl" />
+
+		<beans:property name="contentType" value="text/html; charset=UTF-8" />
+		<beans:property name="exposeRequestAttributes" value="true" />
+		<beans:property name="exposeSessionAttributes" value="true" />
+		<beans:property name="exposeSpringMacroHelpers" value="true" />
+		<beans:property name="requestContextAttribute" value="request" />
+		<!-- 给视图解析器配置优先級 -->
+		<beans:property name="order" value="1" />
+	</beans:bean>
+
+</beans:beans>
